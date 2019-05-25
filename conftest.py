@@ -1,6 +1,7 @@
 import json
 import os
 import pytest
+import allure
 from selenium import webdriver
 
 from db_connector import OxwallDB
@@ -49,6 +50,7 @@ def user(request, db):
     yield user
     db.delete_user(user)
 
+@allure.step("GIVEN I as a logged user")
 @pytest.fixture()
 def logged_user(app, config):
     user = User(**config["web"]["admin"], is_admin=True)

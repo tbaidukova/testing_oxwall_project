@@ -1,3 +1,4 @@
+import allure
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -79,17 +80,21 @@ class SignInPage(BasePage):
     def signin_button(self):
         return self.find_element(self.SIGN_IN)
 
+    @allure.step("THEN Sigh In window is opened")
     def is_this_page(self):
         return self.is_element_present(self.LOGIN_WINDOW_BOX)
 
-    def input_username(self, user):
+    @allure.step("WHEN I input {username}")
+    def input_username(self, username):
         # Input username
-        self.username_field.input(user.username)
+        self.username_field.input(username)
 
-    def input_password(self, user):
+    @allure.step("WHEN I input {password}")
+    def input_password(self, password):
         # Input password
-        self.passwd_field.input(user.password)
+        self.passwd_field.input(password)
 
+    @allure.step("WHEN I submit form")
     def submit_form(self):
         self.signin_button.click()
         # TODO explain!
@@ -114,6 +119,7 @@ class InternalPages(BasePage):
     def right_menu_items(self):
         return self.find_elements(self.RIGHT_MENU_ELEMENTS)
 
+    @allure.step("WHEN I click at Sign In menu")
     def sign_in_click(self):
         # Initialize login(click Sign in button)
         self.right_menu_items[0].click()
@@ -167,6 +173,10 @@ class DashboardPage(InternalPages):
     # @property
     # def user_of_new_status_elements(self):
     #     return self.find_all_visible_elements(self.STATUS_USER)
+
+    @allure.step("THEN Dashboard page is opened")
+    def is_this_page(self):
+        return self.active_menu.text == "DASHBOARD"
 
     def create_new_text_status(self, input_text):
         # Enter new status text
